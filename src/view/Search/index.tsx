@@ -1,42 +1,49 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Filters from "../../components/filters";
+import { Content, LoadingContainer } from "./styles";
 import {
-  Container,
-  Content,
-  ContentResults,
-  ContentResultsCategory,
-  ContentResultsCover,
-  ContentResultsTitle,
-  ContentResultsWrapper,
-} from "./styles";
-import { books } from "../../components/shelves/constants";
+  BookSearchApi,
+  BookSearchApiQueryParams,
+} from "../../components/book/types";
+import useFetch from "../../hooks/fetch/useFetch";
+import { groupByCategory } from "./utils";
+import CategoryGrid from "./fragments/CategoryGrid";
 
 const Search: React.FC = () => {
+  const bookApi = "https://www.googleapis.com/books/v1/volumes";
+  const setBook = (_: any, book: BookSearchApi) => book;
+  const searchParams = useMemo<BookSearchApiQueryParams>(
+    () => ({
+      q: "Harry Potter Star Wars",
+      maxResults: 40,
+      startIndex: Math.floor(Math.random() * 15),
+    }),
+    []
+  );
+
+  const {
+    data: books,
+    loading,
+    error,
+  } = useFetch<BookSearchApi, BookSearchApiQueryParams>(
+    bookApi,
+    searchParams,
+    setBook
+  );
+
+  const categorizedBooks = useMemo(
+    () => groupByCategory(books?.items ?? []),
+    [books]
+  );
+
   return (
-    <Container>
-      <Content>
-        <Filters />
-        <ContentResults>
-          {books.map((shelf) => (
-            <>
-              {shelf.booksShelf.map((book) => (
-                <ContentResultsWrapper>
-                  <ContentResultsCover>
-                    <img src={book.urlImage} alt={book.slug} />
-                  </ContentResultsCover>
-                  <ContentResultsTitle>
-                    <label>{book.title} </label>
-                  </ContentResultsTitle>
-                  <ContentResultsCategory>
-                    <span>{book.autor}</span>
-                  </ContentResultsCategory>
-                </ContentResultsWrapper>
-              ))}
-            </>
-          ))}
-        </ContentResults>
-      </Content>
-    </Container>
+    <Content>
+      <Filters />
+      {loading && <LoadingContainer>....Loading</LoadingContainer>}
+      {!loading && !error && (
+        <CategoryGrid categorizedBooks={categorizedBooks} />
+      )}
+    </Content>
   );
 };
 

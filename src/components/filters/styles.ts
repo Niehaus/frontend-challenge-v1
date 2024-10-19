@@ -3,14 +3,13 @@ import styled from "styled-components";
 
 export const Content = styled.div`
     background-color: #fff;
-    width: 100%;
+    color: #406a76;
 
     @media (min-width: 992px) {
         padding: 0;
         margin: 0 auto;
-        width: 19%;
+        min-width: 20%
     }
-
 `
 export const ContentTitle = styled.p`
     color: #9EAEB7;

@@ -2,34 +2,18 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
     background-color: #fff;
-    width: 100%;
     border-top: 1px solid #dee1e6;
     display: block;
     padding: 16px;
     text-align: center;
     height: auto;
-    max-width: 375px;
-
-
-    @media (min-width: 395px) {
-        max-width: 395px;
-    }
-  
-    @media (min-width: 414px) {
-        max-width: 414px;
-    }
+    max-width: none;
     
     @media (min-width: 768px) {
-        max-width: 768px;
         margin: 20px auto;
-    }
-    
-    @media (min-width: 912px) {
-        max-width: 912px;
     }
 
     @media (min-width: 992px) {
-      width: 100%;
       max-width: none;
       padding: 16px 0 0;
       align-items: baseline;
@@ -43,9 +27,6 @@ export const Container = styled.div`
       z-index: 2;
       height: 90px;
     }
-
-
-    
 `
 export const Content = styled.div`
     background-color: #fff;

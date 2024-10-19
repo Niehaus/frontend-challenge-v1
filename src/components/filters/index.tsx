@@ -17,6 +17,7 @@ const Filter: React.FC = ({
   const handleToggleCheckbox = () => {
     console.log("click");
   };
+  
   return (
     <Content>
       <ContentTitle>{mainTitle}</ContentTitle>

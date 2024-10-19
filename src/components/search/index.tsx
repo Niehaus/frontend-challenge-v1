@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  CategoriesWrapper,
-  CategoryTag,
   Icon,
   InputSearch,
   OverlaySearchContainer,
@@ -10,15 +8,20 @@ import {
   OverlaySearchResultItem,
   OverlaySearchResultItemContent,
   OverlaySearchResultItemImg,
-  RatingTag,
   SearchContainer,
-  TitleWrapper,
 } from "./styles";
-import { BookSearchApi, BookSearchApiQueryParams, SearchProps } from "./types";
 import { useOutsideClickCallback } from "../../hooks/useOutsideClickCallback";
 import { useKeyHandlerCallback } from "../../hooks/useKeyHandlerCallback";
 import useFetch from "../../hooks/fetch/useFetch";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { BookSearchApiQueryParams, BookSearchApi } from "../book/types";
+import { SearchProps } from "./types";
+import {
+  CategoriesWrapper,
+  CategoryTag,
+  RatingTag,
+  TitleWrapper,
+} from "../book/styles";
 
 const Search: React.FC<SearchProps> = () => {
   const wrapperRef = useRef(null);
@@ -33,6 +36,8 @@ const Search: React.FC<SearchProps> = () => {
   // Handle Click and Tab key down
   useOutsideClickCallback(wrapperRef, closeOverlay);
   useKeyHandlerCallback(wrapperRef, closeOverlay, "Tab");
+
+  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTerm(event.target.value);
@@ -110,7 +115,6 @@ const Search: React.FC<SearchProps> = () => {
         onClick={() => setShowOverlay(true)}
       />
       <Icon />
-      {data?.items.length}
       {showOverlay && (
         <OverlaySearchContainer id="searchOverlay" ref={scrollContainerRef}>
           <OverlaySearchResultContainer id="searchResults">
@@ -120,41 +124,41 @@ const Search: React.FC<SearchProps> = () => {
             {data?.items &&
               !loading &&
               data?.items.map(({ id, volumeInfo }, index) => (
-                <Link to={"book/" + id} onClick={() => setShowOverlay(false)}  >
-                  <OverlaySearchResultItem key={index}>
-                    <OverlaySearchResultItemImg>
-                      <img
-                        width={"100%"}
-                        src={volumeInfo.imageLinks.smallThumbnail}
-                        alt={volumeInfo.title}
-                      />
-                    </OverlaySearchResultItemImg>
-                    <OverlaySearchResultItemContent>
-                      <TitleWrapper>
-                        {" "}
-                        {volumeInfo.title}
-                        {volumeInfo.averageRating && (
-                          <RatingTag
-                            style={{
-                              backgroundColor:
-                                volumeInfo.averageRating >= 3
-                                  ? "#EDCD1A"
-                                  : "#EDB669",
-                            }}
-                          >
-                            {volumeInfo.averageRating}
-                          </RatingTag>
-                        )}
-                      </TitleWrapper>
-
-                      <CategoriesWrapper>
-                        {volumeInfo.categories?.map((category, i) => (
-                          <CategoryTag key={i}>{category}</CategoryTag>
-                        ))}
-                      </CategoriesWrapper>
-                    </OverlaySearchResultItemContent>
-                  </OverlaySearchResultItem>
-                </Link>
+                <OverlaySearchResultItem
+                  key={index}
+                  onClick={() => navigate("book/" + id, { state: volumeInfo })}
+                >
+                  <OverlaySearchResultItemImg>
+                    <img
+                      width={"100%"}
+                      src={volumeInfo.imageLinks.smallThumbnail}
+                      alt={volumeInfo.title}
+                    />
+                  </OverlaySearchResultItemImg>
+                  <OverlaySearchResultItemContent>
+                    <TitleWrapper>
+                      {volumeInfo.title}
+                      {volumeInfo.averageRating && (
+                        <RatingTag
+                          style={{
+                            backgroundColor:
+                              volumeInfo.averageRating >= 3
+                                ? "#EDCD1A"
+                                : "#EDB669",
+                          }}
+                        >
+                          {volumeInfo.averageRating}
+                        </RatingTag>
+                      )}
+                    </TitleWrapper>
+                    {volumeInfo.authors?.join(",")}
+                    <CategoriesWrapper>
+                      {volumeInfo.categories?.map((category, i) => (
+                        <CategoryTag key={i}>{category}</CategoryTag>
+                      ))}
+                    </CategoriesWrapper>
+                  </OverlaySearchResultItemContent>
+                </OverlaySearchResultItem>
               ))}
 
             {(data?.items && data?.items.length < 0) ||

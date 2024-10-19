@@ -4,7 +4,7 @@ export const Container = styled.div`
     background-color: #45d0c1;
     position: absolute;
     top: 0;
-    padding: 16px;
+    padding: 16px 0;
     width: 100%;
     
     @media (min-width: 992px) {
@@ -31,9 +31,8 @@ export const Content = styled.div`
 export const ContentSearch = styled.div`
     display: flex;
     align-items: center;
-    width: 96%;
+    width: 90%;
     margin: 16px 0 8px;
-    padding-right: 14px;
 
     @media (min-width: 992px) {
         width: 70%;

@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg';
+import { Link } from 'react-router-dom';
 
 export const SearchContainer = styled.div`
     display: flex;
     flex-grow: 1;
     align-items: center;
     width: 100%;
-
 `
 
 export const InputSearch = styled.input`
@@ -91,45 +91,15 @@ export const OverlaySearchResultItemContent = styled.div`
     flex-direction: column;
 `
 
-export const TitleWrapper = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-export const CategoriesWrapper = styled.div`
-    display: flex;
-    align-items: center;
-
-    padding: 4px 0;
-`
-
-export const CategoryTag = styled.span`
-    padding: 4px 16px;
-    background-color: #45d0c1;
-    color: white;
-
-    border-radius: 50px;
-
-    font-size: 14px
-`
-
-export const RatingTag = styled.span`
-    padding: 4px;
-    margin: 0 4px;
-    color: white;
-
-    border-radius: 40px;
-
-    font-size: 14px;
-    width: 32px;
-    height: 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
 export const OverlaySearchResultEmpty = styled.li`
     list-style: none;
     padding: 8px 16px;
+`
+
+export const ResultLink = styled(Link)`
+    color: inherit;
+
+    &:hover {
+        color: inherit;
+    }
 `
