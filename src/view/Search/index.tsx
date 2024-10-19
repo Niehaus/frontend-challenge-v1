@@ -1,8 +1,7 @@
 import React from "react";
-import Header from "../../components/header";
 import Filters from "../../components/filters";
 import {
-    Container,
+  Container,
   Content,
   ContentResults,
   ContentResultsCategory,
@@ -10,21 +9,12 @@ import {
   ContentResultsTitle,
   ContentResultsWrapper,
 } from "./styles";
-import Footer from "../../components/footer";
-import {
-  footerAllrightsReserved,
-  helpLink,
-  privacyAndPolicy,
-  termsAndUsage,
-} from "../../constants";
 import { books } from "../../components/shelves/constants";
 
 const Search: React.FC = () => {
   return (
-    <>
-      <Header />
-      <Container>
-        <Content>
+    <Container>
+      <Content>
         <Filters />
         <ContentResults>
           {books.map((shelf) => (
@@ -45,15 +35,8 @@ const Search: React.FC = () => {
             </>
           ))}
         </ContentResults>
-        </Content>
-      </Container>
-      <Footer
-        text={footerAllrightsReserved}
-        privacyText={privacyAndPolicy}
-        termsAndUsageText={termsAndUsage}
-        helpText={helpLink}
-      />
-    </>
+      </Content>
+    </Container>
   );
 };
 
