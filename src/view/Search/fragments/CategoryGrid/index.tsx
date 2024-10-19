@@ -19,11 +19,11 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categorizedBooks }) => {
 
   return (
     <CategorizedBooksContainer>
-      {Object.keys(categorizedBooks).map((category) => (
+      {Object.entries(categorizedBooks).map(([category, books]) => (
         <>
           <CategoryTitle>{category}</CategoryTitle>
           <ContentResults>
-            {categorizedBooks[category].map(({ id, volumeInfo: book }) => (
+            {books.map(({ id, volumeInfo: book }) => (
               <>
                 <ContentResultsWrapper
                   onClick={() => navigate("/book/" + id, { state: book })}
