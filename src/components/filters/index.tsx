@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Content,
   ContentTitle,
@@ -6,18 +6,34 @@ import {
   FilterTitle,
   FilterContent,
 } from "./styles";
-import { FilterProps } from "./types";
+import { FilterItem, FilterProps } from "./types";
 import { filtersWithInitialState } from "./constants";
 
-const Filter: React.FC = ({
+const Filter: React.FC<FilterProps> = ({
   mainTitle,
   hasSelectedFilters,
   resetFilters,
-}: FilterProps) => {
-  const handleToggleCheckbox = () => {
-    console.log("click");
+  onChange,
+}) => {
+  const [selectedItems, setSelectedItems] = useState<FilterItem[]>([]);
+
+  const handleToggleCheckbox = (filterType: string, selected: FilterItem) => {
+    setSelectedItems((prevSelected) => {
+      const isSelected =
+        prevSelected.findIndex((item) => item.id === selected.id) > -1;
+
+      const updatedSelection = isSelected
+        ? prevSelected.filter((item) => item.id !== selected.id)
+        : [...prevSelected, { ...selected, filterType }];
+
+      if (onChange) {
+        onChange(updatedSelection);
+      }
+
+      return updatedSelection;
+    });
   };
-  
+
   return (
     <Content>
       <ContentTitle>{mainTitle}</ContentTitle>
@@ -34,8 +50,12 @@ const Filter: React.FC = ({
                   <input
                     name={item.label}
                     type="checkbox"
-                    checked={item.checked}
-                    onChange={() => handleToggleCheckbox()}
+                    checked={
+                      selectedItems.findIndex(
+                        (filter) => filter.id == item.id
+                      ) > -1
+                    }
+                    onChange={() => handleToggleCheckbox(filterType, item)}
                   />
                   <span>{item.label}</span>
                 </li>

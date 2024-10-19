@@ -8,6 +8,7 @@ import {
 import useFetch from "../../hooks/fetch/useFetch";
 import { groupByCategory } from "./utils";
 import CategoryGrid from "./fragments/CategoryGrid";
+import { FilterItem } from "../../components/filters/types";
 
 const Search: React.FC = () => {
   const bookApi = "https://www.googleapis.com/books/v1/volumes";
@@ -36,9 +37,22 @@ const Search: React.FC = () => {
     [books]
   );
 
+  const handleFilterChange = (
+    filters: Array<FilterItem & { filterType?: string | undefined }>
+  ) => {
+    console.log({ filters });
+  };
+
+  const resetFilters = () => {};
+
   return (
     <Content>
-      <Filters />
+      <Filters
+        mainTitle="Filtros"
+        onChange={handleFilterChange}
+        resetFilters={resetFilters}
+        hasSelectedFilters={true}
+      />
       {loading && <LoadingContainer>....Loading</LoadingContainer>}
       {!loading && !error && (
         <CategoryGrid categorizedBooks={categorizedBooks} />
