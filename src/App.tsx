@@ -11,20 +11,23 @@ import Home from "./view/Home";
 import Search from "./view/Search";
 import NoMatch from "./view/NoMatch";
 import Book from "./view/Book";
+import { RoutesContainer } from "./styles";
 
 function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="search" element={<Search />} />
-        <Route path="book/:id" element={<Book />} />
-        {/* Using path="*"" means "match anything", so this route
+      <RoutesContainer>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="search" element={<Search />} />
+          <Route path="book/:id" element={<Book />} />
+          {/* Using path="*"" means "match anything", so this route
         acts like a catch-all for URLs that we don't have explicit
         routes for. */}
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </RoutesContainer>
       <Footer
         text={footerAllrightsReserved}
         privacyText={privacyAndPolicy}
