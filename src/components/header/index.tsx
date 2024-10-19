@@ -3,7 +3,7 @@ import { Container, Content, ContentSearch, ContentUser } from "./styles";
 import Search from "../search";
 
 const Header: React.FC = () => {
-  const [term, setTerm] = useState("");
+
   return (
     <Container>
       <Content>
@@ -18,7 +18,7 @@ const Header: React.FC = () => {
           </a>
         </div>
         <ContentSearch>
-          <Search value={term} />
+          <Search />
         </ContentSearch>
         <ContentUser>
           <p>login</p>

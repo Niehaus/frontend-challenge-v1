@@ -1,5 +1,13 @@
 import styled from 'styled-components'
-import {ReactComponent as SearchIcon} from '../../assets/search-icon.svg';
+import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg';
+
+export const SearchContainer = styled.div`
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    width: 100%;
+
+`
 
 export const InputSearch = styled.input`
     background-color: #F1F7FC;
@@ -27,4 +35,101 @@ export const Icon = styled(SearchIcon)`
     @media (min-width: 992px) {
         right: 42px;
     }
+`
+
+export const OverlaySearchContainer = styled.div`
+    position: absolute;
+    top: 55px; /* Alinhamento abaixo do input */
+    width: inherit;
+    max-width: 960px;
+    background-color: #F1F7FC;
+    border: 1px solid #DEE1E6;
+    border-top: none;
+    color: #406a76;
+
+    padding: 0 8px;
+    
+    // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+
+    z-index: 1000;
+
+    max-height: 40dvh;
+    overflow: auto
+`
+
+export const OverlaySearchResultContainer = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+`
+
+export const OverlaySearchResultItem = styled.li`
+    display: flex;
+    align-items: center;
+
+
+    list-style: none;
+    padding: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+
+    &:hover {
+        background-color: #DAF6F3;
+    }
+`
+
+export const OverlaySearchResultItemImg = styled.li`
+    max-width: 40px;
+`
+
+export const OverlaySearchResultItemContent = styled.div`
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+`
+
+export const TitleWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+export const CategoriesWrapper = styled.div`
+    display: flex;
+    align-items: center;
+
+    padding: 4px 0;
+`
+
+export const CategoryTag = styled.span`
+    padding: 4px 16px;
+    background-color: #45d0c1;
+    color: white;
+
+    border-radius: 50px;
+
+    font-size: 14px
+`
+
+export const RatingTag = styled.span`
+    padding: 4px;
+    margin: 0 4px;
+    color: white;
+
+    border-radius: 40px;
+
+    font-size: 14px;
+    width: 32px;
+    height: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export const OverlaySearchResultEmpty = styled.li`
+    list-style: none;
+    padding: 8px 16px;
 `
