@@ -6,7 +6,7 @@ import {
   FilterTitle,
   FilterContent,
 } from "./styles";
-import { FilterItem, FilterProps } from "./types";
+import { FilterItem, FilterProps, FilterType } from "./types";
 import { filtersWithInitialState } from "./constants";
 
 const Filter: React.FC<FilterProps> = ({
@@ -24,7 +24,7 @@ const Filter: React.FC<FilterProps> = ({
 
       const updatedSelection = isSelected
         ? prevSelected.filter((item) => item.id !== selected.id)
-        : [...prevSelected, { ...selected, filterType }];
+        : [...prevSelected, { ...selected, filterType: (filterType as FilterType) }];
 
       if (onChange) {
         onChange(updatedSelection);

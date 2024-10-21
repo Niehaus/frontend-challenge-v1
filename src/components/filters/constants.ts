@@ -1,3 +1,4 @@
+import { Formats } from "../book/types";
 import { FilterContentProps } from "./types";
 
 export const filtersWithInitialState: FilterContentProps = {
@@ -59,12 +60,12 @@ export const filtersWithInitialState: FilterContentProps = {
       {
         id: 7,
         label: 'EPUB',
-        value: 'EPUB',
+        value: Formats.EPUB,
       },
       {
         id: 8,
         label: 'PDF',
-        value: 'PDF',
+        value: Formats.PDF,
       },
     ],
   },

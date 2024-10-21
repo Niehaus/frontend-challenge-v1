@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Filters from "../../components/filters";
 import { Content, LoadingContainer } from "./styles";
 import {
@@ -8,9 +8,13 @@ import {
 import useFetch from "../../hooks/fetch/useFetch";
 import { groupByCategory } from "./utils";
 import CategoryGrid from "./fragments/CategoryGrid";
-import { FilterItem } from "../../components/filters/types";
+import { FilterItem, FilterType } from "../../components/filters/types";
+import { filter } from "./utils/filter";
 
 const Search: React.FC = () => {
+  const [filters, setFilters] = useState<
+    Array<FilterItem & { filterType?: FilterType | undefined }>
+  >([]);
   const bookApi = "https://www.googleapis.com/books/v1/volumes";
   const setBook = (_: any, book: BookSearchApi) => book;
   const searchParams = useMemo<BookSearchApiQueryParams>(
@@ -32,18 +36,18 @@ const Search: React.FC = () => {
     setBook
   );
 
-  const categorizedBooks = useMemo(
-    () => groupByCategory(books?.items ?? []),
-    [books]
-  );
-
   const handleFilterChange = (
-    filters: Array<FilterItem & { filterType?: string | undefined }>
+    filters: Array<FilterItem & { filterType?: FilterType | undefined }>
   ) => {
-    console.log({ filters });
+    setFilters(filters);
   };
 
   const resetFilters = () => {};
+
+  const categorizedBooks = useMemo(
+    () => groupByCategory(filter(books?.items ?? [], filters)),
+    [books, filters]
+  );
 
   return (
     <Content>
