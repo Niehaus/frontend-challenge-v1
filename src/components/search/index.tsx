@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Icon,
   InputSearch,
   OverlaySearchContainer,
   OverlaySearchResultContainer,
@@ -22,6 +21,8 @@ import {
   RatingTag,
   TitleWrapper,
 } from "../book/styles";
+import styled from "styled-components";
+import { ReactComponent as SearchIcon } from "../../assets/search-icon.svg";
 
 const Search: React.FC<SearchProps> = () => {
   const wrapperRef = useRef(null);
@@ -114,9 +115,13 @@ const Search: React.FC<SearchProps> = () => {
         onChange={handleChange}
         onClick={() => setShowOverlay(true)}
       />
-      <Icon />
+      {/* <Icon /> */}
       {showOverlay && (
-        <OverlaySearchContainer id="searchOverlay" ref={scrollContainerRef}>
+        <OverlaySearchContainer
+          id="searchOverlay"
+          data-testid="searchOverlay"
+          ref={scrollContainerRef}
+        >
           <OverlaySearchResultContainer id="searchResults">
             {loading && (
               <OverlaySearchResultEmpty>Loading...</OverlaySearchResultEmpty>
@@ -161,12 +166,14 @@ const Search: React.FC<SearchProps> = () => {
                 </OverlaySearchResultItem>
               ))}
 
-            {(data?.items && data?.items.length < 0) ||
-              (error && !loading && (
-                <OverlaySearchResultEmpty>
+            {data?.items &&
+              data?.items.length <= 0 &&
+              !loading &&
+              !error && (
+                <OverlaySearchResultEmpty data-testid="resultsNotFound">
                   Nenhum resultado encontrado.
                 </OverlaySearchResultEmpty>
-              ))}
+              )}
           </OverlaySearchResultContainer>
         </OverlaySearchContainer>
       )}

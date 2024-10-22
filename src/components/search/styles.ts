@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg';
 import { Link } from 'react-router-dom';
 
 export const SearchContainer = styled.div`
@@ -28,14 +27,14 @@ export const InputSearch = styled.input`
     }
 `
 
-export const Icon = styled(SearchIcon)`
+/* export const Icon = styled(SearchIcon)`
     position: relative;
     right: 32px;
 
     @media (min-width: 992px) {
         right: 42px;
     }
-`
+` */
 
 export const OverlaySearchContainer = styled.div`
     position: absolute;
@@ -81,7 +80,7 @@ export const OverlaySearchResultItem = styled.li`
     }
 `
 
-export const OverlaySearchResultItemImg = styled.li`
+export const OverlaySearchResultItemImg = styled.div`
     max-width: 40px;
 `
 
