@@ -1,5 +1,5 @@
-import { Formats } from "../book/types";
-import { FilterContentProps } from "./types";
+import { Formats } from "../../book/types";
+import { FilterContentProps } from "../types";
 
 export const filtersWithInitialState: FilterContentProps = {
   price: {

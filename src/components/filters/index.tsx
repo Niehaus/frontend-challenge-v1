@@ -58,6 +58,7 @@ const Filter: React.FC<FilterProps> = ({
                 <li key={item.id}>
                   <input
                     name={item.label}
+                    data-testid={filterType + item.id}
                     type="checkbox"
                     checked={
                       selectedItems.findIndex(
