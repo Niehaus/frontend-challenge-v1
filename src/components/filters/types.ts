@@ -6,9 +6,7 @@ export enum FilterType {
 export type FilterProps = {
   mainTitle: string
   filters: FilterContentProps
-  // dispatch: React.Dispatch<React.SetStateAction<boolean>>
   onChange: (filters: Array<FilterItem & { filterType?: FilterType }>) => void;
-  hasSelectedFilters?: boolean
   resetFilters: () => void
 }
 

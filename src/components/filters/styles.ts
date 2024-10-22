@@ -5,8 +5,11 @@ export const Content = styled.div`
     background-color: #fff;
     color: #406a76;
 
+    border-right: 1px solid #dee1e6;
+
     @media (min-width: 992px) {
-        padding: 0;
+        margin-right: 12px;
+        padding: 0 12px;
         margin: 0 auto;
         min-width: 20%
     }
@@ -20,7 +23,8 @@ export const Button = styled.button`
     height: 40px;
     border-radius: 10px;
     cursor: pointer;
-    padding: 16px;
+    padding: 8px 24px;
+    width: 100%;
     text-transform: uppercase;
     background-color: #ADB7BF;
 `

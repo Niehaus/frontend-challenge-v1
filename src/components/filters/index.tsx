@@ -7,15 +7,15 @@ import {
   FilterContent,
 } from "./styles";
 import { FilterItem, FilterProps, FilterType } from "./types";
-import { filtersWithInitialState } from "./constants";
 
 const Filter: React.FC<FilterProps> = ({
   mainTitle,
-  hasSelectedFilters,
+  filters,
   resetFilters,
   onChange,
 }) => {
   const [selectedItems, setSelectedItems] = useState<FilterItem[]>([]);
+  const [filtersState, setFiltersState] = useState(filters);
 
   const handleToggleCheckbox = (filterType: string, selected: FilterItem) => {
     setSelectedItems((prevSelected) => {
@@ -24,7 +24,10 @@ const Filter: React.FC<FilterProps> = ({
 
       const updatedSelection = isSelected
         ? prevSelected.filter((item) => item.id !== selected.id)
-        : [...prevSelected, { ...selected, filterType: (filterType as FilterType) }];
+        : [
+            ...prevSelected,
+            { ...selected, filterType: filterType as FilterType },
+          ];
 
       if (onChange) {
         onChange(updatedSelection);
@@ -34,13 +37,19 @@ const Filter: React.FC<FilterProps> = ({
     });
   };
 
+  const handleResetFilters = () => {
+    setSelectedItems([]);
+    resetFilters();
+  };
+
   return (
     <Content>
       <ContentTitle>{mainTitle}</ContentTitle>
-      {hasSelectedFilters && (
-        <Button onClick={resetFilters}>Limpar Filtro</Button>
+      {selectedItems.length > 0 && (
+        <Button onClick={handleResetFilters}>Limpar Filtro</Button>
       )}
-      {Object.entries(filtersWithInitialState).map(([filterType, category]) => (
+
+      {Object.entries(filtersState).map(([filterType, category]) => (
         <div key={filterType}>
           <FilterTitle>{category.title}</FilterTitle>
           <FilterContent>
