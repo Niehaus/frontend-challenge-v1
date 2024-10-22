@@ -3,6 +3,7 @@ import { Book } from "../../../../components/book/types";
 import {
   CategorizedBooksContainer,
   CategoryTitle,
+  CategoryWrapper,
   ContentResults,
   ContentResultsCategory,
   ContentResultsCover,
@@ -20,7 +21,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categorizedBooks }) => {
   return (
     <CategorizedBooksContainer>
       {Object.entries(categorizedBooks).map(([category, books]) => (
-        <div key={category}>
+        <CategoryWrapper key={category}>
           <CategoryTitle>{category}</CategoryTitle>
           <ContentResults>
             {books.map(({ id, volumeInfo: book }) => (
@@ -40,7 +41,7 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categorizedBooks }) => {
               </ContentResultsWrapper>
             ))}
           </ContentResults>
-        </div>
+        </CategoryWrapper>
       ))}
     </CategorizedBooksContainer>
   );

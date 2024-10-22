@@ -42,6 +42,8 @@ export const ContentResultsCategory = styled.div`
 
 export const CategorizedBooksContainer = styled.div`
     margin: 0 0 90px 0;
+    padding: 0 24px
 `
 
 export const CategoryTitle = styled.h2``
+export const CategoryWrapper = styled.div``

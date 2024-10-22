@@ -1,94 +1,45 @@
 import { Book, Saleability, AccessInfo } from "../../../components/book/types";
 import { PriceFilterItem, FilterItem, FilterType } from "../../../components/filters/types";
 
-const applyPriceFilter = (
-    priceFilters: PriceFilterItem[],
-    books: Book[]
-): Book[] => {
-    if (priceFilters.length == 0) return books;
+const applyPriceFilter = (book: Book, priceFilters: PriceFilterItem[]): boolean => {
+    if (priceFilters.length === 0) return true;
 
-    let filteredBooks: Book[] = [];
-    priceFilters.forEach(({ rangeValue }) => {
-        filteredBooks = [
-            ...filteredBooks,
-            ...books.filter(
-                ({ saleInfo }) =>
-                    saleInfo.saleability == Saleability.FOR_SALE && // Checks for a saleable book
-                    saleInfo.retailPrice.amount >= rangeValue.min && // Checks for price above min range
-                    saleInfo.retailPrice.amount <= rangeValue.max // Checks for price bellow max range
-            ),
-        ];
-    });
-
-    return filteredBooks;
+    return priceFilters.some(({ rangeValue }) =>
+        book.saleInfo.saleability == Saleability.FOR_SALE &&
+        book.saleInfo.retailPrice.amount >= rangeValue.min &&
+        book.saleInfo.retailPrice.amount <= rangeValue.max
+    );
 };
 
-const applyAvailableItemsFilter = (
-    availableItemsFilter: FilterItem[],
-    books: Book[]
-): Book[] => {
-    if (availableItemsFilter.length == 0) return books;
+const applyAvailableItemsFilter = (book: Book, availableItemsFilters: FilterItem[]): boolean => {
+    if (availableItemsFilters.length === 0) return true;
 
-    let filteredBooks: Book[] = [];
-    availableItemsFilter.forEach(({ value }) => {
-        const saleability = value
-            ? Saleability.FOR_SALE
-            : Saleability.NOT_FOR_SALE;
-
-        filteredBooks = [
-            ...filteredBooks,
-            ...books.filter(({ saleInfo }) => saleInfo.saleability == saleability),
-        ];
+    return availableItemsFilters.some(({ value }) => {
+        const saleability = value ? Saleability.FOR_SALE : Saleability.NOT_FOR_SALE;
+        return book.saleInfo.saleability == saleability
     });
-
-    return filteredBooks;
 };
 
-const applyAvailableFormatsFilter = (
-    availaFormatsFilter: FilterItem[],
-    books: Book[]
-): Book[] => {
-    if (availaFormatsFilter.length == 0) return books;
+const applyAvailableFormatsFilter = (book: Book, availableFormatsFilters: FilterItem[]): boolean => {
+    if (availableFormatsFilters.length === 0) return true;
 
-    let filteredBooks: Book[] = books;
-    availaFormatsFilter.forEach(({ value }) => {
-        const format = value as keyof AccessInfo;
-
-        filteredBooks = [
-            ...filteredBooks.filter(
-                ({ accessInfo }) => accessInfo[format].isAvailable
-            ),
-        ];
-    });
-
-    return filteredBooks;
+    return availableFormatsFilters.some(({ value }) =>
+        book.accessInfo[value as keyof AccessInfo].isAvailable
+    );
 };
 
 export const filter = (books: Book[], filters: Array<FilterItem & { filterType?: FilterType | undefined }>): Book[] => {
-    if (filters.length == 0) return books;
+    if (filters.length === 0) return books;
 
-    const price = filters.filter(
-        (f) => f.filterType === FilterType.PRICE
-    ) as PriceFilterItem[];
+    // Separação dos filtros pelos seus tipos Price, Available Items e Available Formats
+    const priceFilters = filters.filter(f => f.filterType === FilterType.PRICE) as PriceFilterItem[];
+    const availableItemsFilters = filters.filter(f => f.filterType === FilterType.AVAILABLE_ITEMS);
+    const availableFormatsFilters = filters.filter(f => f.filterType === FilterType.AVAILABLE_FORMATS);
 
-    const priceFiltered = applyPriceFilter(price, books);
-    const availableItems = filters.filter(
-        (f) => f.filterType === FilterType.AVAILABLE_ITEMS
+    // Aplicação dos filtros em uma iteração p/ que agora o array books não seja percorrido mais de uma vez
+    return books.filter(book =>
+        applyPriceFilter(book, priceFilters) &&
+        applyAvailableItemsFilter(book, availableItemsFilters) &&
+        applyAvailableFormatsFilter(book, availableFormatsFilters)
     );
-
-    const itemsFiltered = applyAvailableItemsFilter(
-        availableItems,
-        priceFiltered
-    );
-
-    const availableFormats = filters.filter(
-        (f) => f.filterType === FilterType.AVAILABLE_FORMATS
-    );
-
-    const availableFormatsFilter = applyAvailableFormatsFilter(
-        availableFormats,
-        itemsFiltered
-    );
-
-    return availableFormatsFilter;
 };

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import Filters from "../../components/filters";
+import BookFilter from "../../components/filters";
 import { Content, LoadingContainer } from "./styles";
 import {
   BookSearchApi,
@@ -10,6 +10,7 @@ import { groupByCategory } from "./utils";
 import CategoryGrid from "./fragments/CategoryGrid";
 import { FilterItem, FilterType } from "../../components/filters/types";
 import { filter } from "./utils/filter";
+import { filtersWithInitialState } from "./constants";
 
 const Search: React.FC = () => {
   const [filters, setFilters] = useState<
@@ -42,7 +43,9 @@ const Search: React.FC = () => {
     setFilters(filters);
   };
 
-  const resetFilters = () => {};
+  const resetFilters = () => {
+    setFilters([]);
+  };
 
   const categorizedBooks = useMemo(
     () => groupByCategory(filter(books?.items ?? [], filters)),
@@ -51,11 +54,11 @@ const Search: React.FC = () => {
 
   return (
     <Content>
-      <Filters
+      <BookFilter
         mainTitle="Filtros"
+        filters={filtersWithInitialState}
         onChange={handleFilterChange}
         resetFilters={resetFilters}
-        hasSelectedFilters={true}
       />
       {loading && <LoadingContainer>....Loading</LoadingContainer>}
       {!loading && !error && (

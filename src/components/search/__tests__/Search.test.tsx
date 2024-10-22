@@ -7,6 +7,13 @@ import "@testing-library/jest-dom";
 // Mock da função useFetch
 vi.mock("../../../hooks/fetch/useFetch");
 
+// Mock da função useNavigate
+const mockNavigate = vi.fn();
+vi.mock("react-router-dom", () => ({
+  Link: vi.fn(),
+  useNavigate: () => mockNavigate,
+}));
+
 describe("Autocomplete Search", () => {
   const mockBookData = {
     items: [
@@ -184,5 +191,48 @@ describe("Autocomplete Search", () => {
 
     const category = screen.getByText("Category 1");
     expect(category).toBeInTheDocument();
+  });
+
+  it("deve navegar para a página do livro ao clicar em um item", () => {
+    // Mocka a função useFetch com dados de exemplo
+    (useFetch as any).mockReturnValue({
+      data: {
+        items: [
+          {
+            id: "1",
+            volumeInfo: {
+              title: "Book Title 1",
+              authors: ["Author 1"],
+              imageLinks: { smallThumbnail: "url/to/image1" },
+              categories: ["Category 1"],
+            },
+          },
+        ],
+      },
+      loading: false,
+      error: null,
+    });
+
+    // Renderiza o componente antes de cada teste
+    render(<Search />);
+
+    // Abre o overlay clicando no input de pesquisa
+    const inputSearch = screen.getByPlaceholderText("Pesquisar...");
+    fireEvent.click(inputSearch);
+    // Encontra o item de resultado da pesquisa
+    const item = screen.getByText("Book Title 1");
+
+    // Simula um clique no item
+    fireEvent.click(item);
+
+    // Verifica se o mock de navigate foi chamado corretamente
+    expect(mockNavigate).toHaveBeenCalledWith("book/1", {
+      state: {
+        title: "Book Title 1",
+        authors: ["Author 1"],
+        imageLinks: { smallThumbnail: "url/to/image1" },
+        categories: ["Category 1"],
+      },
+    });
   });
 });
