@@ -10,6 +10,7 @@ import {
   ContentResultsTitle,
   ContentResultsWrapper,
 } from "./styles";
+import { useMemo } from "react";
 
 type CategoryGridProps = {
   categorizedBooks: Record<string, Book[]>;
@@ -18,9 +19,14 @@ type CategoryGridProps = {
 const CategoryGrid: React.FC<CategoryGridProps> = ({ categorizedBooks }) => {
   const navigate = useNavigate();
 
+  const categoryGrid = useMemo(
+    () => Object.entries(categorizedBooks),
+    [categorizedBooks]
+  );
+
   return (
     <CategorizedBooksContainer>
-      {Object.entries(categorizedBooks).map(([category, books]) => (
+      {categoryGrid.map(([category, books]) => (
         <CategoryWrapper key={category}>
           <CategoryTitle>{category}</CategoryTitle>
           <ContentResults>
@@ -43,6 +49,8 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({ categorizedBooks }) => {
           </ContentResults>
         </CategoryWrapper>
       ))}
+
+      {categoryGrid.length == 0 && <>A prateleira está vazia ):</>}
     </CategorizedBooksContainer>
   );
 };

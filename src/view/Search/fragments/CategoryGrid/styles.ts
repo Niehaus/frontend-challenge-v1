@@ -42,7 +42,9 @@ export const ContentResultsCategory = styled.div`
 
 export const CategorizedBooksContainer = styled.div`
     margin: 0 0 90px 0;
-    padding: 0 24px
+    padding: 0 24px;
+
+    flex-grow: 1;
 `
 
 export const CategoryTitle = styled.h2``
