@@ -1,27 +1,39 @@
 import React, { useState } from "react";
-import { Container, Content, ContentSearch, ContentUser } from "./styles";
+import {
+  Container,
+  Content,
+  ContentLogo,
+  ContentSearch,
+  ContentUser,
+  ContentUserLink,
+  Icon,
+  Logo,
+  UserButton,
+} from "./styles";
 import Search from "../search";
 
 const Header: React.FC = () => {
-
   return (
     <Container>
       <Content>
-        <div>
-          <a href="/">
+        <ContentLogo>
+          <Logo href="/">
             <img
               src="https://s3-sa-east-1.amazonaws.com/files.arvoredelivros.com.br/arvore-library-assets/images/logos/logo-livros-horizontal-white.svg"
               alt="Arvore Livros"
-              width="168"
+              width="160"
               height="25"
             />
-          </a>
-        </div>
+          </Logo>
+        </ContentLogo>
         <ContentSearch>
           <Search />
+          <UserButton>
+            <Icon />
+          </UserButton>
         </ContentSearch>
         <ContentUser>
-          <p>login</p>
+          <ContentUserLink>Login</ContentUserLink>
         </ContentUser>
       </Content>
     </Container>

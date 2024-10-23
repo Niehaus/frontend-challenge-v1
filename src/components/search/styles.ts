@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
 
 export const SearchContainer = styled.div`
     display: flex;
@@ -42,21 +41,17 @@ export const InputSearch = styled.input`
 
 export const OverlaySearchContainer = styled.div`
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: 110%;
+    left: 5px;
     width: inherit;
-    max-width: 960px;
     background-color: #F1F7FC;
     border: 1px solid #DEE1E6;
     border-top: none;
     color: #406a76;
 
     padding: 0 8px;
-    
-    // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-
-    border-bottom-right-radius: 50px;
-    border-bottom-left-radius: 50px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 
     z-index: 1000;
 

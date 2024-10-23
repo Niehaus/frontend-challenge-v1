@@ -9,10 +9,12 @@ import {
 } from "./styles";
 import { settings } from "../carousel/constants";
 import Carousel from "../carousel";
-import { books } from "./constants";
 import { ShelvesProps } from "./types";
+import { useNavigate } from "react-router-dom";
 
 const Shelves: React.FC<ShelvesProps> = ({ shelves }) => {
+  const navigate = useNavigate();
+  
   return (
     <Container>
       <Shelf>
@@ -21,11 +23,14 @@ const Shelves: React.FC<ShelvesProps> = ({ shelves }) => {
             <TitleCategory>{category}</TitleCategory>
             <Content>
               <Carousel settings={settings} spaceBetweenItems="16px">
-                {books.map(({ volumeInfo }) => (
-                  <ContentItem key={volumeInfo.title}>
+                {books.map(({id, volumeInfo: book }) => (
+                  <ContentItem
+                    key={book.title}
+                    onClick={() => navigate("/book/" + id, { state: book })}
+                  >
                     <img
-                      src={volumeInfo.imageLinks?.thumbnail}
-                      alt={volumeInfo.title}
+                      src={book.imageLinks?.thumbnail}
+                      alt={book.title}
                     />
                   </ContentItem>
                 ))}

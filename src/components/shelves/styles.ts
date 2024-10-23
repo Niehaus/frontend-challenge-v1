@@ -52,6 +52,7 @@ export const ContentItem = styled.div`
     display: flex;
     width: calc(100% - 80px);
     max-width: 768px;
+    cursor: pointer;
 
     > img {
         width: 198px;
@@ -69,7 +70,7 @@ export const ContentItem = styled.div`
         max-width: 1296px;
     }
    
-   
+
 `
 
 export const TitleCategory = styled.div`

@@ -9,7 +9,7 @@ export const Item = styled.li`
     list-style: none;
     padding: 16px;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 10px;
 
     &:hover {
         background-color: #DAF6F3;

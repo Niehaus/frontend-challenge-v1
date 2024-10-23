@@ -16,6 +16,7 @@ import SearchResultItem from "./fragments/item";
 
 const Search: React.FC<SearchProps> = () => {
   const wrapperRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null); // Referência ao contêiner de scroll
 
   const [term, setTerm] = useState("");
@@ -99,6 +100,7 @@ const Search: React.FC<SearchProps> = () => {
   return (
     <SearchContainer ref={wrapperRef}>
       <InputSearch
+        ref={inputRef}
         type="text"
         value={term}
         placeholder="Pesquisar..."
@@ -129,7 +131,7 @@ const Search: React.FC<SearchProps> = () => {
               ))}
 
             {((!loading && (!data?.items || data.items.length === 0)) ||
-              error) && (
+              error && data?.items.length === 0) && (
               <OverlaySearchResultEmpty data-testid="resultsNotFound">
                 {error
                   ? "Erro ao buscar resultados."
