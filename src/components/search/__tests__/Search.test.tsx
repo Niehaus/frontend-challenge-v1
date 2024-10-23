@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from "vitest";
 import Search from "../index"; // Importe o componente correto
 import useFetch from "../../../hooks/fetch/useFetch"; // Importe a função customizada
 import "@testing-library/jest-dom";
+import { BookSearchApi } from "../../book/types";
 
 // Mock da função useFetch
 vi.mock("../../../hooks/fetch/useFetch");
@@ -144,27 +145,50 @@ describe("Autocomplete Search", () => {
     const loadingElement = screen.getByText("Loading...");
     expect(loadingElement).toBeInTheDocument();
   });
-
-  it("deve exibir a mensagem 'Nenhum resultado encontrado' quando não há resultados", async () => {
-    // Mocka a função useFetch para retornar sem itens
-    (useFetch as any).mockReturnValue({
-      data: { items: [] },
+  // Definir os diferentes estados a serem testados
+  it.each([
+    { loading: true, data: null, error: null, expected: "Loading..." },
+    {
       loading: false,
+      data: { items: [] },
       error: null,
-    });
+      expected: "Nenhum resultado encontrado.",
+    },
+    {
+      loading: false,
+      data: { items: [{ id: "1", volumeInfo: { title: "Book 1" } }] },
+      error: null,
+      expected: "Book 1",
+    },
+    {
+      loading: false,
+      data: null,
+      error: true,
+      expected: "Erro ao buscar resultados.",
+    },
+  ])(
+    "renderiza corretamente $expected quando loading=$loading, error=$error",
+    ({ loading, data, error, expected }) => {
+      // Mocka a função useFetch para retornar sem itens
+      (useFetch as any).mockReturnValue({
+        data,
+        loading,
+        error,
+      });
 
-    // Renderiza o componente antes de cada teste
-    render(<Search />);
+      // Renderiza o componente antes de cada teste
+      render(<Search />);
 
-    // Encontra o input de pesquisa
-    const inputSearch = screen.getByPlaceholderText("Pesquisar...");
+      // Encontra o input de pesquisa
+      const inputSearch = screen.getByPlaceholderText("Pesquisar...");
 
-    // Simula o clique no input de pesquisa para abrir o overlay
-    fireEvent.click(inputSearch);
+      // Simula o clique no input de pesquisa para abrir o overlay
+      fireEvent.click(inputSearch);
 
-    const noResultsMessage = screen.getByTestId("resultsNotFound");
-    expect(noResultsMessage).toBeInTheDocument();
-  });
+      const result = screen.getByText(expected);
+      expect(result).toBeInTheDocument();
+    }
+  );
 
   it("deve renderizar resultados da pesquisa quando a API retorna dados", async () => {
     // Mocka a função useFetch para retornar dados de sucesso

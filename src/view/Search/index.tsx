@@ -6,11 +6,11 @@ import {
   BookSearchApiQueryParams,
 } from "../../components/book/types";
 import useFetch from "../../hooks/fetch/useFetch";
-import { groupByCategory } from "./utils";
 import CategoryGrid from "./fragments/CategoryGrid";
 import { FilterItem, FilterType } from "../../components/filters/types";
 import { filter } from "./utils/filter";
 import { filtersWithInitialState } from "./constants";
+import { groupByCategory } from "../../utils";
 
 const Search: React.FC = () => {
   const [filters, setFilters] = useState<
