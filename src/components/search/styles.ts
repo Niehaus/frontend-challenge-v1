@@ -6,6 +6,9 @@ export const SearchContainer = styled.div`
     flex-grow: 1;
     align-items: center;
     width: 100%;
+
+    position: relative;
+    display: inline-block;
 `
 
 export const InputSearch = styled.input`
@@ -25,6 +28,7 @@ export const InputSearch = styled.input`
         color: #406a76;
         opacity: 0;
     }
+
 `
 
 /* export const Icon = styled(SearchIcon)`
@@ -38,7 +42,8 @@ export const InputSearch = styled.input`
 
 export const OverlaySearchContainer = styled.div`
     position: absolute;
-    top: 55px; /* Alinhamento abaixo do input */
+    top: 100%;
+    left: 0;
     width: inherit;
     max-width: 960px;
     background-color: #F1F7FC;
@@ -56,7 +61,7 @@ export const OverlaySearchContainer = styled.div`
     z-index: 1000;
 
     max-height: 40dvh;
-    overflow: auto
+    overflow: auto;
 `
 
 export const OverlaySearchResultContainer = styled.ul`
@@ -65,40 +70,7 @@ export const OverlaySearchResultContainer = styled.ul`
     padding: 10px;
 `
 
-export const OverlaySearchResultItem = styled.li`
-    display: flex;
-    align-items: center;
-
-
-    list-style: none;
-    padding: 16px;
-    cursor: pointer;
-    border-radius: 50px;
-
-    &:hover {
-        background-color: #DAF6F3;
-    }
-`
-
-export const OverlaySearchResultItemImg = styled.div`
-    max-width: 40px;
-`
-
-export const OverlaySearchResultItemContent = styled.div`
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-`
-
 export const OverlaySearchResultEmpty = styled.li`
     list-style: none;
     padding: 8px 16px;
-`
-
-export const ResultLink = styled(Link)`
-    color: inherit;
-
-    &:hover {
-        color: inherit;
-    }
 `

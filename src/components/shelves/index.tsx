@@ -10,30 +10,30 @@ import {
 import { settings } from "../carousel/constants";
 import Carousel from "../carousel";
 import { books } from "./constants";
+import { ShelvesProps } from "./types";
 
-const Shelves: React.FC = () => {
+const Shelves: React.FC<ShelvesProps> = ({ shelves }) => {
   return (
     <Container>
       <Shelf>
-      {books.map((shelf) => {
-        return (
-          <ContentList>
-            <TitleCategory key={shelf.id}>{shelf.shelfCategory}</TitleCategory>
+        {Object.entries(shelves).map(([category, books]) => (
+          <ContentList key={category}>
+            <TitleCategory>{category}</TitleCategory>
             <Content>
-
-                <Carousel settings={settings} spaceBetweenItems="16px">
-                {shelf.booksShelf.map((book) => (
-                    <ContentItem key={book.title}>
-                        <img src={book.urlImage} alt={book.slug} />
-                    </ContentItem>
+              <Carousel settings={settings} spaceBetweenItems="16px">
+                {books.map(({ volumeInfo }) => (
+                  <ContentItem key={volumeInfo.title}>
+                    <img
+                      src={volumeInfo.imageLinks?.thumbnail}
+                      alt={volumeInfo.title}
+                    />
+                  </ContentItem>
                 ))}
-                </Carousel>
+              </Carousel>
             </Content>
-
           </ContentList>
-        );
-      })}
-    </Shelf>
+        ))}
+      </Shelf>
     </Container>
   );
 };

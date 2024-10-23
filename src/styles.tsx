@@ -6,7 +6,7 @@ export const RoutesContainer = styled.div`
   margin-top: 160px;
 
   @media (min-width: 768px) {
-    margin-top: 160px;
+    margin-top: 180px;
   }
 
   @media (min-width: 992px) {

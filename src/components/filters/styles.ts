@@ -6,6 +6,7 @@ export const Content = styled.div`
     color: #406a76;
 
     border-right: 1px solid #dee1e6;
+    padding: 32px 12px 0 12px;
 
     @media (min-width: 992px) {
         margin-right: 12px;
