@@ -1,4 +1,4 @@
-import { Book } from "../../components/book/types";
+import { Book } from "../components/book/types";
 
 export const groupByCategory = (items: Book[]): Record<string, Book[]> => {
     return items.reduce<Record<string, Book[]>>((acc, item) => {

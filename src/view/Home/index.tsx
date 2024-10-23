@@ -1,11 +1,14 @@
 import Shelves from "../../components/shelves";
+import { useBooksContext } from "../../context/books";
 
 const Home: React.FC = () => {
+  const { groupedBooks } = useBooksContext();
 
   return (
-  <>
-    <Shelves />
-  </>)
-}
+    <>
+      <Shelves shelves={groupedBooks} />
+    </>
+  );
+};
 
-export default Home
+export default Home;
