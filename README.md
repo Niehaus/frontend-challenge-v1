@@ -133,4 +133,37 @@ Para que o teste possa ser avaliado, é importante que o candidato:
 - Teste aplicado no campo de busca com o redirecionamento para a página de busca.
 - Teste aplicado na página de busca com dados populados pela API como resultados da pesquisa feita pelo usuário (com e sem filtro aplicado na busca).
 
+### Instruções para Instalação e Execução da Aplicação
 
+Para instalar e rodar a aplicação, siga os passos abaixo:
+
+1. **Clone o repositório**:
+   Abra o terminal e clone o repositório da aplicação com o seguinte comando:
+   ```bash
+   git clone https://github.com/Niehaus/frontend-challenge-v1.git
+   ```
+
+2. **Navegue até o diretório da aplicação**:
+   Após clonar o repositório, acesse a pasta da aplicação:
+   ```bash
+   cd frontend-challenge-v1
+   ```
+
+3. **Instale as dependências**:
+   Execute o comando abaixo para instalar todas as dependências necessárias:
+   ```bash
+   npm install
+   ```
+
+4. **Inicie a aplicação**:
+   Para rodar a aplicação, utilize o comando:
+   ```bash
+   npm run dev
+   ```
+
+5. **Executando os testes**:
+   Os testes da aplicação podem ser executados com o seguinte comando:
+   ```bash
+   npm run test
+   ```
+   Os testes utilizam o Vitest como framework, garantindo uma execução rápida e eficiente.
